@@ -10,12 +10,14 @@ import java.util.Timer;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class VisualManager extends JPanel
+public class FrameManager extends JPanel
 implements ActionListener, KeyListener{
 Font titleFont;
 Font smallFont;
 Timer frameDraw;
-VisualManager(){
+public static String input;
+FunctionManager FM = new FunctionManager();
+FrameManager(){
 	titleFont = new Font("Times New Roman", Font.BOLD, 50);
 	smallFont = new Font("Times New Roman", Font.BOLD, 20);
 }
@@ -30,7 +32,7 @@ void updateMenuState(){
 	
 }
 void updateGameState() {
-	
+	FM.update();
 }
 void updateEndState() {
 	
@@ -50,8 +52,20 @@ void drawGameState(Graphics g) {
 	g.fillRect(10, 490, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
 }
 void drawEndState(Graphics g) {
+	if(FM.escapeAccomplished == true) {
+		g.setFont(titleFont);
+		g.setColor(Color.BLUE);
+		g.drawString("You Win!", 15, 50);	
 	g.setColor(Color.GREEN);
 	g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
+	}
+	else {
+		g.setFont(titleFont);
+		g.setColor(Color.ORANGE);
+		g.drawString("You Lose...", 15, 50);	
+		g.setColor(Color.RED);
+		g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
+	}
 }
 
 
@@ -81,21 +95,27 @@ void drawEndState(Graphics g) {
 			    if (currentState == MENU) {
 			       JOptionPane.showMessageDialog(null, "Press Enter to Start Dungeon Escape.");
 			       JOptionPane.showMessageDialog(null, "Press Space while in the game to review the commands.");
+			       JOptionPane.showMessageDialog(null, "Press the I key to look at your inventory.");
 			       JOptionPane.showMessageDialog(null, "Press the E key to use a command.");
 			    } else if(currentState == GAME){
 			    	  JOptionPane.showMessageDialog(null, "Press E to enter a command.");
 			    	  JOptionPane.showMessageDialog(null, "You can use the 'use' command to use any useful object.");
 			    	  JOptionPane.showMessageDialog(null, "You can use the 'look around' command to see what could possibly be helpful.");
-			    	  JOptionPane.showMessageDialog(null, "You can use the 'examine' command to look at the a useful object.");
 			    	  JOptionPane.showMessageDialog(null, "You can use the 'take' command to take all the useful objects in the room.");
 			    	  JOptionPane.showMessageDialog(null, "Press ENTER to exit the game.");
 			    }
 			}   
 			if (e.getKeyCode()==KeyEvent.VK_E) {
 			    if (currentState == GAME) {
-			      String input = JOptionPane.showInputDialog("Type a command. (Use, look around, examine, take");
+			       input = JOptionPane.showInputDialog("Type a command. (Use, look around, examine, take");
+			       FM.methodCheck();
 			    }
-			}   
+			} 
+			if (e.getKeyCode()==KeyEvent.VK_I) {
+				if(currentState == GAME) {
+				FM.checkInventory();
+				}
+			}
 		}
 		@Override
 		public void keyReleased(KeyEvent arg0) {

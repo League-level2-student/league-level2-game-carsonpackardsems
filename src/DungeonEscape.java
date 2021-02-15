@@ -2,7 +2,7 @@ import javax.swing.JFrame;
 
 public class DungeonEscape {
 	JFrame frame = new JFrame();
-	VisualManager VM = new VisualManager();
+	FrameManager VM = new FrameManager();
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 500;
 	void setup() {
