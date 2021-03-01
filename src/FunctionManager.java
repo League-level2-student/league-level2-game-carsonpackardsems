@@ -219,7 +219,8 @@ public class FunctionManager {
 					if (ropeCuts == 0) {
 						JOptionPane.showMessageDialog(null, "You cut the rope.");
 						ropeCuts++;
-						if (ropeCuts == 10) {
+					}
+						if (ropeCuts >= 10) {
 							JOptionPane.showMessageDialog(null, "You cut the rope, and a key drops from the ceiling!");
 							ropeCut = true;
 						}
@@ -275,7 +276,6 @@ public class FunctionManager {
 				}
 			}
 		}
-	}
 
 	public void checkInventory() {
 		if (inventory.size() == 0) {
