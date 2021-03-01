@@ -140,7 +140,7 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 				JOptionPane.showMessageDialog(null, "Press E to enter a command.");
 				JOptionPane.showMessageDialog(null, "You can use the 'use' command to use any useful object.");
 				JOptionPane.showMessageDialog(null, "You can use the 'look around' command to see what could possibly be helpful.");
-				JOptionPane.showMessageDialog(null, "You can use the 'take' command to take all the useful objects in the room.");
+				JOptionPane.showMessageDialog(null, "You can use the 'take' command to automatically take all the useful objects in the room.");
 				JOptionPane.showMessageDialog(null, "Press ENTER to exit the game.");
 			FM.manageLevelObjects();
 			}
