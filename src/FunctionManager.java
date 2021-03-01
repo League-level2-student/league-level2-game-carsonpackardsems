@@ -50,7 +50,7 @@ public class FunctionManager {
 		boolean view1 = false;
 		boolean view2 = false;
 		boolean view3 = false;
-		currentObjects.clear();
+		manageLevelObjects();
 		inventory.clear();
 	}
 
