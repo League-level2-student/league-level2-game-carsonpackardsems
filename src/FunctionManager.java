@@ -35,6 +35,7 @@ public class FunctionManager {
 
 //Miscellaneous
 	void reset() {
+		dungeonLevel = 0;
 		ropeCuts = 0;
 		timesTickled = 0;
 		potSmashed = false;
@@ -50,6 +51,7 @@ public class FunctionManager {
 		boolean view1 = false;
 		boolean view2 = false;
 		boolean view3 = false;
+		currentObjects.clear();
 		manageLevelObjects();
 		inventory.clear();
 	}
@@ -105,11 +107,11 @@ public class FunctionManager {
 			level1Set = true;
 			}
 			if (ropeCut == true) {
-				if (inventory.contains("Key2")) {
+		if(!inventory.contains("Key2")) {
 					currentObjects.remove("Rope");
 					JOptionPane.showMessageDialog(null, "You found the key and put it it your inventory.");
 					inventory.add("Key2");
-				}
+			}
 			}
 			if (lock2Undone == true) {
 				if (currentObjects.contains("SecondLock")) {
@@ -197,7 +199,6 @@ public class FunctionManager {
 				}
 			}
 		}
-
 		if (DungeonEscape.FM2.input.equalsIgnoreCase("Use")) {
 			if (dungeonLevel == 0) {
 				if (inventory.contains("Hammer")) {
@@ -216,11 +217,11 @@ public class FunctionManager {
 			}
 			if (dungeonLevel == 1) {
 				if (inventory.contains("Knife")) {
-					if (ropeCuts == 0) {
-						JOptionPane.showMessageDialog(null, "You cut the rope.");
+					if (ropeCuts < 3) {
+						JOptionPane.showMessageDialog(null, "You cut the rope, but not enough.");
 						ropeCuts++;
 					}
-						if (ropeCuts >= 10) {
+						if (ropeCuts >= 3) {
 							JOptionPane.showMessageDialog(null, "You cut the rope, and a key drops from the ceiling!");
 							ropeCut = true;
 						}
