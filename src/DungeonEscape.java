@@ -3,8 +3,8 @@ import javax.swing.JFrame;
 public class DungeonEscape {
 	JFrame frame = new JFrame();
 	static FrameManager FM2 = new FrameManager();
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 500;
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 750;
 	void setup() {
 		frame.add(FM2);
 		frame.setVisible(true);

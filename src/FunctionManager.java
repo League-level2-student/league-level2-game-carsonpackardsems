@@ -15,6 +15,13 @@ public class FunctionManager {
 	boolean lock1Undone = false;
 	boolean lock2Undone = false;
 	boolean lock3Undone = false;
+	boolean storyTold = false;
+	boolean level0Set = false;
+	boolean level1Set = false;
+	boolean level2set = false;
+	boolean view1 = false;
+	boolean view2 = false;
+	boolean view3 = false;
 
 	FunctionManager() {
 		dungeonLevel = 0;
@@ -27,28 +34,50 @@ public class FunctionManager {
 	}
 
 //Miscellaneous
+	void reset() {
+		ropeCuts = 0;
+		timesTickled = 0;
+		potSmashed = false;
+		ropeCut = false;
+		guardTickled = false;
+		escapeAccomplished = false;
+		lock1Undone = false;
+		lock2Undone = false;
+		lock3Undone = false;
+		boolean level0Set = false;
+		boolean level1Set = false;
+		boolean level2set = false;
+		boolean view1 = false;
+		boolean view2 = false;
+		boolean view3 = false;
+		currentObjects.clear();
+		inventory.clear();
+	}
+
 	void tellStory() {
-		JOptionPane.showMessageDialog(null, "You open your eyes to see yourself in a dungeon.");
-		JOptionPane.showMessageDialog(null,
-				"'You are prisoner number 24602, and you have been arrested for stealing a loaf of bread and a wedge of cheese. You're even worse than that Jean val Jean dude!' the guard says to you.");
-		JOptionPane.showMessageDialog(null,
-				"'You are being put in a high security dungeon, with three levels, each level is equipped with a puzzle to keep you not bored,' the guard continues.");
-		JOptionPane.showMessageDialog(null, "'Now, goodbye,' he says, and he walks out the door.");
-		JOptionPane.showMessageDialog(null, "Use the space key to review your options.");
+		if (storyTold == false) {
+			JOptionPane.showMessageDialog(null, "You open your eyes to see yourself in a dungeon.");
+			JOptionPane.showMessageDialog(null,
+					"'You are prisoner number 24602, and you have been arrested for stealing a loaf of bread and a wedge of cheese. You're even worse than that Jean val Jean dude!' the guard says to you.");
+			JOptionPane.showMessageDialog(null,
+					"'You are being put in a high security dungeon, with three levels, each level is equipped with a puzzle to keep you not bored,' the guard continues.");
+			JOptionPane.showMessageDialog(null, "'Now, goodbye,' he says, and he walks out the door.");
+			JOptionPane.showMessageDialog(null, "Use the space key to review your options.");
+			storyTold = true;
+		} else {
+			JOptionPane.showMessageDialog(null, "You know the story already.");
+		}
 	}
 
 //Objects
 	void manageLevelObjects() {
 		if (dungeonLevel == 0) {
-			if (!currentObjects.contains("Hammer")) {
+			if(level0Set != true) {
 				currentObjects.add("Hammer");
-			}
-			if (!currentObjects.contains("Pot")) {
-				currentObjects.add("Pot");
-			}
-			if (!currentObjects.contains("FirstLock")) {
-				currentObjects.add("FirstLock");
-			}
+			currentObjects.add("Pot");
+				currentObjects.add("FirstLock");	
+			level0Set = true;
+		}
 		}
 		if (potSmashed == true) {
 			if (!inventory.contains("Key1")) {
@@ -62,21 +91,19 @@ public class FunctionManager {
 				currentObjects.remove("FirstLock");
 			}
 		}
-
-		else if (dungeonLevel == 1) {
+		if (dungeonLevel == 1) {
+			if(level1Set != true) {
 			if (currentObjects.contains("Hammer")) {
 				currentObjects.remove("Hammer");
 			}
-			if (!currentObjects.contains("Knife")) {
-				currentObjects.add("Knife");
+			currentObjects.add("Knife");
+			if(currentObjects.contains("Knife")) {
+				System.out.println("objectMade");
 			}
-			if (!currentObjects.contains("Rope")) {
-				currentObjects.add("Rope");
+			currentObjects.add("Rope");
+			currentObjects.add("SecondLock");
+			level1Set = true;
 			}
-			if (!currentObjects.contains("SecondLock")) {
-				currentObjects.add("SecondLock");
-			}
-
 			if (ropeCut == true) {
 				if (inventory.contains("Key2")) {
 					currentObjects.remove("Rope");
@@ -89,19 +116,15 @@ public class FunctionManager {
 					currentObjects.remove("SecondLock");
 				}
 			}
-		} else if (dungeonLevel == 2) {
-			if (!currentObjects.contains("Stick")) {
-				currentObjects.add("Stick");
-			}
-			if (!currentObjects.contains("Nail")) {
-				currentObjects.add("Nail");
-			}
-			if (!currentObjects.contains("Feather")) {
-				currentObjects.add("Feather");
-			}
-			if (!currentObjects.contains("Guard")) {
-				currentObjects.add("Guard");
-			}
+		}
+			if (dungeonLevel == 2) {
+				if(level2set != true) {
+			currentObjects.add("Stick");
+			currentObjects.add("Nail");
+			currentObjects.add("Feather");
+			currentObjects.add("Guard");
+			level2set = true;
+				}
 			if (guardTickled == true) {
 				if (!currentObjects.contains("Key3")) {
 					JOptionPane.showMessageDialog(null, "You found the key and put it it your inventory.");
@@ -117,29 +140,43 @@ public class FunctionManager {
 			System.out.println(currentObjects.size());
 			for (int i = 0; i < currentObjects.size(); i++) {
 				JOptionPane.showMessageDialog(null, "There is a " + currentObjects.get(i) + ".");
+				if(dungeonLevel == 0) {
+					view1 = true;
+				}
+				if(dungeonLevel == 1) {
+					view2 = true;
+				}
+				if(dungeonLevel == 2) {
+					view3 = true;
+				}
 			}
 			DungeonEscape.FM2.input = "";
 		}
 		if (DungeonEscape.FM2.input.equalsIgnoreCase("Take")) {
 			if (dungeonLevel == 0) {
+				if(view1 == true) {
 				if (currentObjects.contains("Hammer")) {
 					currentObjects.remove("Hammer");
 					inventory.add("Hammer");
 					JOptionPane.showMessageDialog(null, "Took a Hammer!");
+				}
 				} else {
 					JOptionPane.showMessageDialog(null, "There's nothing else to take.");
 				}
 			}
 			if (dungeonLevel == 1) {
+				if(view2 == true) {
 				if (currentObjects.contains("Knife")) {
 					currentObjects.remove("Knife");
 					inventory.add("Knife");
 					JOptionPane.showMessageDialog(null, "Took a Knife!");
 				}
+				}
 			} else {
 				JOptionPane.showMessageDialog(null, "There's nothing else to take.");
 			}
 			if (dungeonLevel == 2) {
+				if(view3 == true) {
 				if (currentObjects.contains("Stick")) {
 					currentObjects.remove("Stick");
 					inventory.add("Stick");
@@ -154,6 +191,7 @@ public class FunctionManager {
 					currentObjects.remove("Feather");
 					inventory.add("Feather");
 					JOptionPane.showMessageDialog(null, "Took a Feather!");
+				}
 				} else {
 					JOptionPane.showMessageDialog(null, "There's nothing else to take.");
 				}
@@ -163,8 +201,10 @@ public class FunctionManager {
 		if (DungeonEscape.FM2.input.equalsIgnoreCase("Use")) {
 			if (dungeonLevel == 0) {
 				if (inventory.contains("Hammer")) {
+					if(potSmashed == false) {
 					JOptionPane.showMessageDialog(null, "You broke the pot with your Hammer.");
 					potSmashed = true;
+				}
 				}
 				if (inventory.contains("Key1")) {
 					JOptionPane.showMessageDialog(null, "You take your key and unlock the first Lock!");
@@ -177,8 +217,9 @@ public class FunctionManager {
 			if (dungeonLevel == 1) {
 				if (inventory.contains("Knife")) {
 					if (ropeCuts == 0) {
-						JOptionPane.showMessageDialog(null, "You cut the rope, but you need to cut it more.");
-						if (ropeCuts == 1) {
+						JOptionPane.showMessageDialog(null, "You cut the rope.");
+						ropeCuts++;
+						if (ropeCuts == 10) {
 							JOptionPane.showMessageDialog(null, "You cut the rope, and a key drops from the ceiling!");
 							ropeCut = true;
 						}

@@ -66,6 +66,34 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 	void drawGameState(Graphics g) {
 		g.setColor(Color.ORANGE);
 		g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
+		g.setFont(titleFont);
+		g.setColor(Color.RED);
+		g.drawString("Level : " + FM.dungeonLevel + "", 15, 50);
+	if(FM.lock1Undone != true) {
+		g.setColor(Color.lightGray);
+	g.fillRect(300, 375, 50, 50);
+	g.setColor(Color.BLACK);
+	g.fillRect(320, 385, 12, 30);
+	}
+	if(FM.lock2Undone != true) {
+	g.setColor(Color.darkGray);
+	g.fillRect(400, 375, 50, 50);
+	g.setColor(Color.BLACK);
+	g.fillRect(420, 385, 12, 30);
+	}
+	if(FM.lock3Undone != true) {
+	g.setColor(Color.yellow);
+	g.fillRect(500, 375, 50, 50);
+	g.setColor(Color.BLACK);
+	g.fillRect(525, 385, 12, 30);
+	}
+	g.setColor(Color.DARK_GRAY);
+	g.fillRect(715, 645, 240, 40);
+	g.setColor(Color.lightGray);
+	g.fillRect(735, 650, 200, 30);
+	g.setColor(Color.BLACK);
+	g.setFont(smallFont);
+	g.drawString("Space to review", 750, 675);
 	}
 
 	void drawEndState(Graphics g) {
@@ -95,7 +123,7 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 				currentState = MENU;
 			} else if (currentState == MENU){
 				currentState++;
-				FM.dungeonLevel = 0;
+				FM.reset();
 				FM.tellStory();
 			}
 			else if (currentState == GAME) {
@@ -114,6 +142,7 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 				JOptionPane.showMessageDialog(null, "You can use the 'look around' command to see what could possibly be helpful.");
 				JOptionPane.showMessageDialog(null, "You can use the 'take' command to take all the useful objects in the room.");
 				JOptionPane.showMessageDialog(null, "Press ENTER to exit the game.");
+			FM.manageLevelObjects();
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_E) {
