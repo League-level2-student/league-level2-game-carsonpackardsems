@@ -127,7 +127,12 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 				FM.tellStory();
 			}
 			else if (currentState == GAME) {
+				String endGame = JOptionPane.showInputDialog("End your game? (Yes or no)");
+				if(endGame.equalsIgnoreCase("Yes")) {
 				currentState++;
+				}else {
+					JOptionPane.showMessageDialog(null, "Ok, not exiting.");
+				}
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -154,6 +159,11 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 		if (e.getKeyCode() == KeyEvent.VK_I) {
 			if (currentState == GAME) {
 				FM.checkInventory();
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_0) {
+			if (currentState == GAME) {
+		//		FM.adminSkip();
 			}
 		}
 	}
