@@ -70,7 +70,14 @@ public class FunctionManager {
 			JOptionPane.showMessageDialog(null, "Use the space key to review your options.");
 			storyTold = true;
 		} else {
-			JOptionPane.showMessageDialog(null, "You know the story already.");
+			JOptionPane.showMessageDialog(null, "You know the beginning story already.");
+		}
+		if(escapeAccomplished == true) {
+			JOptionPane.showMessageDialog(null, "You got out of jail and convinced the local authorities that you were innocent.");
+			JOptionPane.showMessageDialog(null, "You never had to see that jail again.");
+			JOptionPane.showMessageDialog(null, "You found a nearby village that you settled down in and you lived happily ever after.");
+			DungeonEscape.FM2.currentState = DungeonEscape.FM2.END;
+			
 		}
 	}
 
@@ -123,6 +130,9 @@ public class FunctionManager {
 			}
 		}
 		if (dungeonLevel == 2) {
+			if(currentObjects.contains("Knife")) {
+				currentObjects.remove("Knife");
+			}
 			if (level2set != true) {
 				currentObjects.add("Stick");
 				currentObjects.add("Nail");
@@ -131,8 +141,8 @@ public class FunctionManager {
 				level2set = true;
 			}
 			if (guardTickled == true) {
-				if (!currentObjects.contains("Key3")) {
-					JOptionPane.showMessageDialog(null, "You found the key and put it it your inventory.");
+				if (!inventory.contains("Key3")) {
+				JOptionPane.showMessageDialog(null, "You found the key and put it it your inventory.");
 					inventory.add("Key3");
 				}
 			}
@@ -209,8 +219,6 @@ public class FunctionManager {
 						}
 					}
 				}
-			} else {
-				JOptionPane.showMessageDialog(null, "There's nothing else to take.");
 			}
 		}
 
@@ -266,7 +274,7 @@ public class FunctionManager {
 						if (inventory.contains("Stick")) {
 							if (inventory.contains("Nail")) {
 								if (inventory.contains("Feather")) {
-									JOptionPane.showMessageDialog(null, "You constructed the Tickle Device!");
+									JOptionPane.showMessageDialog(null, "You constructed the Tickler!");
 									inventory.add("TickleDevice");
 									toolMade = true;
 								} else {
@@ -282,19 +290,21 @@ public class FunctionManager {
 						JOptionPane.showMessageDialog(null,
 								"You didn't take the hammer! You'll have to go all the way back...");
 						dungeonLevel = 0;
-
 					}
 				}
-				if (useInput.equalsIgnoreCase("TickleDevice")) {
+			}
+				if (useInput.equalsIgnoreCase("Tickler")) {
+					if(timesTickled < 4) {
 					JOptionPane.showMessageDialog(null, "You tickle the guard, but he doesn't drop the key.");
 					timesTickled++;
-					if (timesTickled > 4) {
+					}
+					if (timesTickled >= 4) {
 						JOptionPane.showMessageDialog(null,
 								"The guard jerks his knee, and the key goes into your cell!");
 						guardTickled = true;
 					}
 				}
-			}
+			
 			if (useInput.equalsIgnoreCase("Key3")) {
 				if (inventory.contains("Key3")) {
 					JOptionPane.showMessageDialog(null, "You take your key and unlock the third Lock!");
@@ -305,13 +315,12 @@ public class FunctionManager {
 					JOptionPane.showMessageDialog(null, "You beat the game!!!");
 					JOptionPane.showMessageDialog(null, "Congratulations!!!");
 					escapeAccomplished = true;
+				tellStory();
 				}
 
 			}
 		}
 	}
-
-
 	public void checkInventory() {
 		if (inventory.size() == 0) {
 			JOptionPane.showMessageDialog(null, "Nothing is in your inventory.");

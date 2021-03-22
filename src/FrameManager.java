@@ -54,7 +54,7 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 
 	void drawMenuState(Graphics g) {
 		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, 0, DungeonEscape.HEIGHT, DungeonEscape.WIDTH);
+		g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
 		g.setFont(titleFont);
 		g.setColor(Color.RED);
 		g.drawString("Dungeon Escape", 15, 50);
@@ -64,6 +64,7 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 	}
 
 	void drawGameState(Graphics g) {
+		if(FM.escapeAccomplished == false) {
 		g.setColor(Color.ORANGE);
 		g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
 		g.setFont(titleFont);
@@ -94,15 +95,23 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 	g.setColor(Color.BLACK);
 	g.setFont(smallFont);
 	g.drawString("Space to review", 750, 675);
+		}
+		else if(FM.escapeAccomplished == true) {
+			g.setColor(Color.CYAN);
+			g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
+			g.setColor(Color.YELLOW);
+			g.fillOval(75, 75, 50, 50);
+		}
 	}
 
 	void drawEndState(Graphics g) {
 		if (FM.escapeAccomplished == true) {
+			g.setColor(Color.GREEN);
+			g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
 			g.setFont(titleFont);
 			g.setColor(Color.BLUE);
 			g.drawString("You Win!", 15, 50);
-			g.setColor(Color.GREEN);
-			g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
+			g.setColor(Color.gray);
 		} else {
 			g.setColor(Color.RED);
 			g.fillRect(0, 0, DungeonEscape.WIDTH, DungeonEscape.HEIGHT);
@@ -161,9 +170,9 @@ public class FrameManager extends JPanel implements ActionListener, KeyListener 
 				FM.checkInventory();
 			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_0) {
+		if (e.getKeyCode() == KeyEvent.VK_3) {
 			if (currentState == GAME) {
-		//		FM.adminSkip();
+			FM.adminSkip();
 			}
 		}
 	}
